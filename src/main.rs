@@ -1,16 +1,19 @@
-use std::env::args;
+// use crate::data_structures::queue::Queue;
 
-use percolation::execute_percolation;
-
-mod percolation;
-mod quick_find;
-mod quick_union;
-mod quick_union_weighted;
+mod algorithms;
+mod data_structures;
+mod exercises;
 
 fn main() {
-    let args: Vec<String> = args().collect();
-
-    let n: usize = args[1].parse().unwrap();
-    let runs: usize = args[2].parse().unwrap();
-    execute_percolation(n, runs);
+    // let mut my_list = Queue::new();
+    //
+    // my_list.enqueue(4);
+    // my_list.enqueue(3);
+    // my_list.enqueue(1);
+    //
+    // println!("{:#?}", my_list);
+    //
+    // println!("{:#?}", my_list.dequeue());
+    //
+    // println!("{:#?}", my_list)
 }

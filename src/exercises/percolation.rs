@@ -1,6 +1,6 @@
 use rand::Rng;
 
-use crate::quick_union_weighted::QuickUnionWeighted;
+use crate::algorithms::quick_union_weighted::QuickUnionWeighted;
 
 pub fn execute_percolation(n: usize, runs: usize) {
     let mut rng = rand::thread_rng();
@@ -40,7 +40,7 @@ struct MatrixElement {
 }
 
 impl Percolation {
-    fn new(n: usize) -> Self {
+    pub fn new(n: usize) -> Self {
         let mut elements: Vec<Vec<MatrixElement>> = Vec::with_capacity(n);
 
         for i in 0..n {
@@ -69,7 +69,7 @@ impl Percolation {
         }
     }
 
-    fn open(&mut self, i: usize, j: usize) {
+    pub fn open(&mut self, i: usize, j: usize) {
         let MatrixElement { is_open, idx } = self.get_mut(i, j);
 
         if *is_open {
