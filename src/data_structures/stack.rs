@@ -1,38 +1,28 @@
-use std::mem::replace;
-
-use super::types::{Link, Node};
+use super::types::Node;
 
 #[derive(Debug)]
 pub struct Stack<T> {
-    head: Link<T>,
+    head: Option<Box<Node<T>>>,
 }
 
 impl<T> Stack<T> {
     pub fn new() -> Stack<T> {
-        Stack { head: Link::Empty }
+        Stack { head: Option::None }
     }
 
     pub fn push(&mut self, elem: T) {
-        let list = replace(&mut self.head, Link::Empty);
+        let list = self.head.take();
         let new_node = Node { elem, next: list };
-        self.head = Link::More(Box::new(new_node));
+        self.head = Some(Box::new(new_node));
     }
 
     pub fn pop(&mut self) -> Option<T> {
-        let list = replace(&mut self.head, Link::Empty);
-        match list {
-            Link::Empty => None,
-            Link::More(node) => {
-                self.head = node.next;
-                Some(node.elem)
-            }
-        }
+        let node = self.head.take()?;
+        self.head = node.next;
+        Some(node.elem)
     }
 
     pub fn is_empty(&self) -> bool {
-        match self.head {
-            Link::Empty => true,
-            Link::More(_) => false,
-        }
+        self.head.is_none()
     }
 }
