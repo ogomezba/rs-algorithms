@@ -55,7 +55,7 @@ impl Percolation {
             elements.push(row);
         }
 
-        let mut qu = QuickUnionWeighted::new(n * n + 2);
+        let qu = QuickUnionWeighted::new(n * n + 2);
 
         let virtual_origin = n * n;
         let virtual_end = n * n + 1;

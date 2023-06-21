@@ -1,5 +1,7 @@
 // use crate::data_structures::queue::Queue;
 
+use exercises::percolation::execute_percolation;
+
 mod algorithms;
 mod data_structures;
 mod exercises;
@@ -16,4 +18,5 @@ fn main() {
     // println!("{:#?}", my_list.dequeue());
     //
     // println!("{:#?}", my_list)
+    execute_percolation(5, 1)
 }
