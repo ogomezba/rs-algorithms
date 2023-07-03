@@ -2,7 +2,7 @@ use std::time::Instant;
 
 use algorithms::knuth_shuffle::shuffle;
 
-use crate::{algorithms::merge_sort::sort, exercises::percolation::execute_percolation};
+use crate::{algorithms::merge_sort::bottom_up_sort, exercises::percolation::execute_percolation};
 
 mod algorithms;
 mod data_structures;
@@ -16,8 +16,8 @@ fn main() {
     println!("{:#?}", shuffling.elapsed());
 
     let sorting = Instant::now();
-    let sorted = sort(v);
-    println!("{:#?}", sorted.last());
+    bottom_up_sort(&mut v);
+    println!("{:#?}", v.last());
     println!("{:#?}", sorting.elapsed());
 
     execute_percolation(5, 1)
