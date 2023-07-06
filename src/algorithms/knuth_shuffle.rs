@@ -1,6 +1,6 @@
 use rand::Rng;
 
-pub fn shuffle<T>(v: &mut Vec<T>) {
+pub fn shuffle<T>(v: &mut [T]) {
     let mut i = 1;
     let mut rnd = rand::thread_rng();
 

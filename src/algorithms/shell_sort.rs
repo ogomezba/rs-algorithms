@@ -10,7 +10,7 @@ pub fn shell_sort<T: PartialOrd>(v: &mut Vec<T>) {
     }
 }
 
-pub fn shell_sort_h<T: PartialOrd>(v: &mut Vec<T>, h: usize) {
+pub fn shell_sort_h<T: PartialOrd>(v: &mut [T], h: usize) {
     if h < 1 || v.len() < h {
         return;
     }
