@@ -1,3 +1,40 @@
+pub struct Queue<T> {
+    elements: Vec<Option<T>>,
+    first: usize,
+    last: usize,
+}
+
+impl<T: Default> Queue<T> {
+    pub fn new() -> Self {
+        Queue {
+            elements: Vec::new(),
+            first: 0,
+            last: 0,
+        }
+    }
+
+    pub fn enqueue(&mut self, item: T) {
+        self.elements.push(Some(item));
+        self.last += 1;
+    }
+
+    pub fn dequeue(&mut self) -> Option<T> {
+        if self.last == 0 {
+            return None;
+        }
+
+        let item = std::mem::replace(&mut self.elements[self.first], None);
+        self.first += 1;
+
+        if self.first == self.last {
+            self.first = 0;
+            self.last = 0;
+        }
+
+        return item;
+    }
+}
+
 // use std::mem::replace;
 //
 // use super::types::{Link, Node};
