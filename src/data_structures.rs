@@ -1,3 +1,4 @@
+pub mod binary_heap;
 pub mod queue;
 pub mod randomized_queue;
 pub mod stack;
