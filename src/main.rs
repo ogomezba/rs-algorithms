@@ -36,4 +36,6 @@ fn main() {
     println!("{:#?}", map.get("B"));
     println!("{:#?}", map.get("C"));
     println!("{:#?}", map.get("A"));
+
+    println!("min value: {:#?}", map.min());
 }

@@ -16,10 +16,6 @@ impl<K: Ord, T> BinarySearchTree<K, T> {
         BinarySearchTree { root: None }
     }
 
-    pub fn put(&mut self, key: K, value: T) {
-        self.root = Self::do_put(&mut self.root, key, value);
-    }
-
     pub fn get(&self, key: K) -> Option<&T> {
         let mut base_node = &self.root;
         loop {
@@ -36,6 +32,10 @@ impl<K: Ord, T> BinarySearchTree<K, T> {
                 }
             }
         }
+    }
+
+    pub fn put(&mut self, key: K, value: T) {
+        self.root = Self::do_put(&mut self.root, key, value);
     }
 
     fn do_put(node: &mut Option<Box<Node<K, T>>>, key: K, val: T) -> Option<Box<Node<K, T>>> {
@@ -60,5 +60,17 @@ impl<K: Ord, T> BinarySearchTree<K, T> {
         }
 
         return node.take();
+    }
+
+    pub fn min(&self) -> Option<&K> {
+        let mut node = &self.root;
+        let mut previous_node = None;
+
+        while let Some(n) = node {
+            previous_node = Some(n);
+            node = &n.left;
+        }
+
+        previous_node.map(|n| &n.key)
     }
 }
