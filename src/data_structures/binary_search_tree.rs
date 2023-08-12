@@ -4,6 +4,7 @@ struct Node<K: Ord, T> {
     val: T,
     left: Option<Box<Node<K, T>>>,
     right: Option<Box<Node<K, T>>>,
+    size: usize,
 }
 
 #[derive(Debug)]
@@ -46,6 +47,7 @@ impl<K: Ord, T> BinarySearchTree<K, T> {
                     val,
                     left: None,
                     right: None,
+                    size: 1,
                 }))
             }
             Some(node) => {
@@ -56,6 +58,10 @@ impl<K: Ord, T> BinarySearchTree<K, T> {
                 } else {
                     node.val = val;
                 }
+
+                node.size = 1
+                    + node.left.as_ref().map_or(0, |n| n.size)
+                    + node.right.as_ref().map_or(0, |n| n.size);
             }
         }
 
@@ -72,5 +78,21 @@ impl<K: Ord, T> BinarySearchTree<K, T> {
         }
 
         previous_node.map(|n| &n.key)
+    }
+
+    pub fn max(&self) -> Option<&K> {
+        let mut node = &self.root;
+        let mut previous_node = None;
+
+        while let Some(n) = node {
+            previous_node = Some(n);
+            node = &n.right;
+        }
+
+        previous_node.map(|n| &n.key)
+    }
+
+    pub fn len(&self) -> usize {
+        self.root.as_ref().map_or(0, |n| n.size)
     }
 }
