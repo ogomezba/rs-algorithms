@@ -1,13 +1,13 @@
 pub struct BinaryHeap<T> {
     pub elements: Vec<T>,
-    less_eq: fn(&T, &T) -> bool,
+    less_prio: fn(&T, &T) -> bool,
 }
 
 impl<T> BinaryHeap<T> {
-    pub fn new(less_eq: fn(&T, &T) -> bool) -> Self {
+    pub fn new(less_prio: fn(&T, &T) -> bool) -> Self {
         Self {
             elements: Vec::new(),
-            less_eq,
+            less_prio,
         }
     }
 
@@ -35,11 +35,11 @@ impl<T> BinaryHeap<T> {
             let element = &self.elements[idx];
             let parent = &self.elements[parent_idx];
 
-            if (self.less_eq)(element, parent) {
-                break;
-            } else {
+            if (self.less_prio)(parent, element) {
                 self.elements.swap(idx, parent_idx);
                 idx = parent_idx;
+            } else {
+                break;
             }
         }
     }
@@ -55,12 +55,12 @@ impl<T> BinaryHeap<T> {
             }
 
             if child + 1 < self.elements.len()
-                && (self.less_eq)(&self.elements[child], &self.elements[child + 1])
+                && (self.less_prio)(&self.elements[child], &self.elements[child + 1])
             {
                 child += 1;
             }
 
-            if (self.less_eq)(&self.elements[child], &self.elements[i]) {
+            if (self.less_prio)(&self.elements[child], &self.elements[i]) {
                 return;
             }
 
@@ -83,7 +83,7 @@ impl<T> BinaryHeap<T> {
 }
 
 pub fn max_priority_queue<T: Ord>() -> BinaryHeap<T> {
-    BinaryHeap::new(|a: &T, b: &T| a <= b)
+    BinaryHeap::new(|a: &T, b: &T| a < b)
 }
 
 pub fn min_priority_queue<T: Ord>() -> BinaryHeap<T> {

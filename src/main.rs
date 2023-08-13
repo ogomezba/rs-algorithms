@@ -1,41 +1,27 @@
 use std::time::Instant;
 
-use data_structures::binary_search_tree::BinarySearchTree;
+use algorithms::knuth_shuffle::shuffle;
+use data_structures::binary_heap::BinaryHeap;
+use exercises::slider_puzzle::{self, Board};
 
-use crate::algorithms::{heap_sort::sort, knuth_shuffle::shuffle};
+use crate::{
+    algorithms::heap_sort,
+    data_structures::binary_heap::{max_priority_queue, min_priority_queue},
+};
 
 mod algorithms;
 mod data_structures;
 mod exercises;
 
 fn main() {
-    /* let mut v: Vec<u32> = (0..=10000000).collect();
-    let shuffling = Instant::now();
-    shuffle(&mut v);
-    println!("{:#?}", v.last());
-    println!("{:#?}", shuffling.elapsed());
+    let tiles_1 = vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 0]];
+    let tiles_2 = vec![vec![2, 1, 3], vec![4, 5, 6], vec![7, 8, 0]];
+    let tiles_3 = vec![vec![2, 0, 4], vec![6, 5, 3], vec![7, 8, 1]];
+    let tiles_4 = vec![vec![0, 1, 3], vec![4, 2, 5], vec![7, 8, 6]];
 
-    let sorting = Instant::now();
-    let sorted = sort(v);
-    println!("{:#?}", sorted.last());
-    println!("{:#?}", sorting.elapsed()); */
+    let board = Board::new(tiles_4);
 
-    let mut map = BinarySearchTree::new();
+    let solution = slider_puzzle::solve_puzzle(board);
 
-    map.put("C", 2);
-    map.put("F", 5);
-    map.put("A", 0);
-    map.put("E", 4);
-    map.put("B", 1);
-    map.put("D", 3);
-    map.put("G", 6);
-
-    println!("{:#?}", map);
-    println!("{:#?}", map.get("F"));
-    println!("{:#?}", map.get("G"));
-    println!("{:#?}", map.get("B"));
-    println!("{:#?}", map.get("C"));
-    println!("{:#?}", map.get("A"));
-
-    println!("min value: {:#?}", map.min());
+    solution.print_solution();
 }
