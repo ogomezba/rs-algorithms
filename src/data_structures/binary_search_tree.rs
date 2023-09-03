@@ -18,21 +18,19 @@ impl<K: Ord, T> BinarySearchTree<K, T> {
     }
 
     pub fn get(&self, key: K) -> Option<&T> {
-        let mut base_node = &self.root;
-        loop {
-            match base_node {
-                None => return None,
-                Some(node) => {
-                    if node.key == key {
-                        return Some(&node.val);
-                    } else if key < node.key {
-                        base_node = &node.left;
-                    } else {
-                        base_node = &node.right;
-                    }
-                }
+        let mut current_node = self.root.as_deref();
+
+        while let Some(node) = current_node {
+            if node.key == key {
+                return Some(&node.val);
+            } else if key < node.key {
+                current_node = node.left.as_deref();
+            } else {
+                current_node = node.right.as_deref();
             }
         }
+
+        return None;
     }
 
     pub fn put(&mut self, key: K, value: T) {

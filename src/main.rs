@@ -1,27 +1,33 @@
 use std::time::Instant;
 
-use algorithms::knuth_shuffle::shuffle;
-use data_structures::binary_heap::BinaryHeap;
-use exercises::slider_puzzle::{self, Board};
-
-use crate::{
-    algorithms::heap_sort,
-    data_structures::binary_heap::{max_priority_queue, min_priority_queue},
-};
+use data_structures::balanced_search_tree::BalancedSearchTree;
 
 mod algorithms;
 mod data_structures;
 mod exercises;
 
 fn main() {
-    let tiles_1 = vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 0]];
-    let tiles_2 = vec![vec![2, 1, 3], vec![4, 5, 6], vec![7, 8, 0]];
-    let tiles_3 = vec![vec![2, 0, 4], vec![6, 5, 3], vec![7, 8, 1]];
-    let tiles_4 = vec![vec![0, 1, 3], vec![4, 2, 5], vec![7, 8, 6]];
+    let mut bst = BalancedSearchTree::new();
 
-    let board = Board::new(tiles_4);
+    let put = Instant::now();
 
-    let solution = slider_puzzle::solve_puzzle(board);
+    for i in 0..=10000000 {
+        bst.put(i, i)
+    }
 
-    solution.print_solution();
+    println!("{:#?}", put.elapsed());
+
+    let mut get = Instant::now();
+
+    println!("{:#?}", bst.get(0));
+    println!("{:#?}", get.elapsed());
+
+    get = Instant::now();
+    println!("{:#?}", bst.get(50));
+    println!("{:#?}", get.elapsed());
+
+    get = Instant::now();
+
+    println!("{:#?}", bst.get(900000));
+    println!("{:#?}", get.elapsed());
 }
