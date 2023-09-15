@@ -30,8 +30,8 @@ impl<K: Ord + Debug, V: Debug> BalancedSearchTree<K, V> {
 
         while let Some(node) = current_node {
             match key.cmp(&node.key) {
-                Ordering::Less => return Some(&node.val),
-                Ordering::Equal => current_node = node.left.as_deref(),
+                Ordering::Equal => return Some(&node.val),
+                Ordering::Less => current_node = node.left.as_deref(),
                 Ordering::Greater => current_node = node.right.as_deref(),
             }
         }

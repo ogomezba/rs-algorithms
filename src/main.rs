@@ -1,33 +1,36 @@
 use std::time::Instant;
 
-use data_structures::balanced_search_tree::BalancedSearchTree;
+use rand::{seq::SliceRandom, thread_rng};
+
+use crate::data_structures::binary_search_tree::BinarySearchTree;
 
 mod algorithms;
 mod data_structures;
 mod exercises;
 
 fn main() {
-    let mut bst = BalancedSearchTree::new();
+    let mut rng = thread_rng();
+    let mut numbers: Vec<usize> = (1..=1000000).collect();
+    numbers.shuffle(&mut rng);
 
-    let put = Instant::now();
+    let mut bst = BinarySearchTree::new();
 
-    for i in 0..=10000000 {
-        bst.put(i, i)
+    for a in numbers {
+        bst.put(a, a);
     }
 
-    println!("{:#?}", put.elapsed());
+    let mins = Instant::now();
 
-    let mut get = Instant::now();
-
-    println!("{:#?}", bst.get(0));
-    println!("{:#?}", get.elapsed());
-
-    get = Instant::now();
-    println!("{:#?}", bst.get(50));
-    println!("{:#?}", get.elapsed());
-
-    get = Instant::now();
-
-    println!("{:#?}", bst.get(900000));
-    println!("{:#?}", get.elapsed());
+    println!("{:#?}", bst.get(5));
+    println!("{:#?}", bst.get(1000));
+    println!("{:#?}", bst.len());
+    bst.delete(5);
+    println!("{:#?}", bst.len());
+    bst.delete(1000);
+    println!("{:#?}", bst.get(5));
+    println!("{:#?}", bst.get(1000));
+    println!("{:#?}", bst.get(1));
+    println!("{:#?}", bst.get(50000));
+    println!("{:#?}", bst.len());
+    println!("{:#?}", mins.elapsed());
 }
