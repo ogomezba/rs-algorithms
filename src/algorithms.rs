@@ -1,3 +1,4 @@
+pub mod geometric_algorithms;
 pub mod heap_sort;
 pub mod insertion_sort;
 pub mod knuth_shuffle;

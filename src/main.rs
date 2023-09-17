@@ -1,36 +1,21 @@
 use std::time::Instant;
 
-use rand::{seq::SliceRandom, thread_rng};
-
-use crate::data_structures::binary_search_tree::BinarySearchTree;
+use algorithms::geometric_algorithms::{line_segment_intersection, LineSegment};
 
 mod algorithms;
 mod data_structures;
 mod exercises;
 
 fn main() {
-    let mut rng = thread_rng();
-    let mut numbers: Vec<usize> = (1..=1000000).collect();
-    numbers.shuffle(&mut rng);
+    let mut line_segments = Vec::new();
 
-    let mut bst = BinarySearchTree::new();
+    line_segments.push(LineSegment::new((2, -3), (2, 3)));
+    line_segments.push(LineSegment::new((3, -2), (15, -2)));
+    line_segments.push(LineSegment::new((13, 0), (13, -3)));
+    line_segments.push(LineSegment::new((0, 0), (4, 0)));
+    line_segments.push(LineSegment::new((1, 1), (7, 1)));
 
-    for a in numbers {
-        bst.put(a, a);
-    }
+    let intersections = line_segment_intersection(&line_segments);
 
-    let mins = Instant::now();
-
-    println!("{:#?}", bst.get(5));
-    println!("{:#?}", bst.get(1000));
-    println!("{:#?}", bst.len());
-    bst.delete(5);
-    println!("{:#?}", bst.len());
-    bst.delete(1000);
-    println!("{:#?}", bst.get(5));
-    println!("{:#?}", bst.get(1000));
-    println!("{:#?}", bst.get(1));
-    println!("{:#?}", bst.get(50000));
-    println!("{:#?}", bst.len());
-    println!("{:#?}", mins.elapsed());
+    println!("{:#?}", intersections);
 }
