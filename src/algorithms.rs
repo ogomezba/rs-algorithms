@@ -1,7 +1,9 @@
 pub mod geometric_algorithms;
+pub mod graph_algorithms;
 pub mod heap_sort;
 pub mod insertion_sort;
 pub mod knuth_shuffle;
+pub mod kruskal_mst;
 pub mod merge_sort;
 pub mod quick_find;
 pub mod quick_sort;

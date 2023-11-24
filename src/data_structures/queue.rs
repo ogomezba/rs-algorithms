@@ -14,7 +14,11 @@ impl<T: Default> Queue<T> {
     }
 
     pub fn enqueue(&mut self, item: T) {
-        self.elements.push(Some(item));
+        if self.last == self.elements.len() || self.elements.is_empty() {
+            self.elements.push(Some(item));
+        } else {
+            self.elements[self.last] = Some(item);
+        }
         self.last += 1;
     }
 
@@ -32,6 +36,10 @@ impl<T: Default> Queue<T> {
         }
 
         return item;
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.last == 0
     }
 }
 

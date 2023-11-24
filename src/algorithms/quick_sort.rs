@@ -5,9 +5,7 @@ use super::{insertion_sort as isort, knuth_shuffle::shuffle};
 static CUTOFF: usize = 10;
 
 pub fn sort<T: Ord>(v: &mut [T]) {
-    shuffle(v);
     do_sort(v);
-    isort::sort(v);
 }
 
 pub fn selection<T: Ord>(v: &mut [T], k: usize) -> &T {
@@ -30,11 +28,11 @@ pub fn do_selection<T: Ord>(v: &mut [T], k: usize, lo: usize, hi: usize) -> &T {
 }
 
 fn do_sort<T: Ord>(v: &mut [T]) {
-    if v.len() <= CUTOFF {
+    let partition = partition_slice(v);
+
+    if partition == 0 {
         return;
     }
-
-    let partition = partition_slice(v);
 
     do_sort(&mut v[0..partition]);
     do_sort(&mut v[(partition + 1)..]);
@@ -74,30 +72,19 @@ fn partition_slice<T: Ord>(v: &mut [T]) -> usize {
         return 0;
     }
 
-    let mut i = 1;
-    let mut j = v.len() - 1;
+    let mut idx = 0;
+    let mut i = 0;
+    let last = v.len() - 1;
 
-    loop {
-        let pivot = &v[0];
-
-        while i < v.len() && &v[i] < pivot {
-            i += 1;
+    while i < last {
+        if v[i] < v[last] {
+            v.swap(i, idx);
+            idx += 1;
         }
 
-        while &v[j] > pivot {
-            j -= 1;
-        }
-
-        if i >= j {
-            break;
-        }
-
-        v.swap(i, j);
         i += 1;
-        j -= 1;
     }
 
-    v.swap(0, j);
-
-    return j;
+    v.swap(idx, last);
+    return idx;
 }

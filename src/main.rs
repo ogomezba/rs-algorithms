@@ -1,21 +1,29 @@
-use std::time::Instant;
+use data_structures::graph::Graph;
 
-use algorithms::geometric_algorithms::{line_segment_intersection, LineSegment};
+use crate::algorithms::graph_algorithms::BreadthFirstPath;
 
 mod algorithms;
 mod data_structures;
 mod exercises;
 
 fn main() {
-    let mut line_segments = Vec::new();
+    let mut graph = Graph::new(12);
+    graph.add_edge(0, 1);
+    graph.add_edge(0, 2);
+    graph.add_edge(2, 3);
+    graph.add_edge(5, 2);
+    graph.add_edge(8, 9);
+    graph.add_edge(1, 5);
 
-    line_segments.push(LineSegment::new((2, -3), (2, 3)));
-    line_segments.push(LineSegment::new((3, -2), (15, -2)));
-    line_segments.push(LineSegment::new((13, 0), (13, -3)));
-    line_segments.push(LineSegment::new((0, 0), (4, 0)));
-    line_segments.push(LineSegment::new((1, 1), (7, 1)));
-
-    let intersections = line_segment_intersection(&line_segments);
-
-    println!("{:#?}", intersections);
+    let paths = BreadthFirstPath::create(&graph, 0);
+    println!("{:#?}", paths.path_to(1));
+    println!("{:#?}", paths.path_to(2));
+    println!("{:#?}", paths.path_to(3));
+    println!("{:#?}", paths.path_to(4));
+    println!("{:#?}", paths.path_to(5));
+    println!("{:#?}", paths.path_to(6));
+    println!("{:#?}", paths.path_to(7));
+    println!("{:#?}", paths.path_to(8));
+    println!("{:#?}", paths.path_to(9));
+    println!("{:#?}", paths.path_to(10));
 }
